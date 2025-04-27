@@ -12,6 +12,8 @@ body {
     position: relative; /* Pour pouvoir positionner des éléments dedans */
 }
 
+/* Menu */
+
 .menu {
     display: flex;
     align-items: center;
@@ -51,6 +53,30 @@ body {
     cursor: pointer;
 }
 
+/* Modal */
+
+.modal {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 80vh;
+    display: none;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.modal-content p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Cercle */
+
 .circle {
     width: 25vw;
     height: 50vh;
@@ -67,10 +93,12 @@ body {
 
 #circle2 {
     background-color: #FFF;
-    top: 54%;
+    top: 53%;
     width: 22vw;
     height: 44vh;
 }
+
+/* Footer */
 
 .footer {
     position: absolute;
