@@ -1,28 +1,81 @@
-body {
-    font-family: Arial, sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-header {
-    background-color: #222;
+body {
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    position: relative; /* Pour pouvoir positionner des éléments dedans */
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 10vw;
+}
+
+.menu_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100vw;
+    height: 40vh;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 80px;
+    border-radius: 80px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.icons img {
+    width: 50px;
+    height: 50px;
+}
+
+.icons:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid red;
+    cursor: pointer;
+}
+
+.circle {
+    width: 25vw;
+    height: 50vh;
+    border-radius: 50%;
+    position: absolute; /* On positionne par rapport au body */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Décalage pour bien centrer */
+}
+
+#circle1 {
+    background-color: red;
+}
+
+#circle2 {
+    background-color: #FFF;
+    top: 54%;
+    width: 22vw;
+    height: 44vh;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
     color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-nav a {
-    color: #fff;
-    margin: 0 1rem;
-    text-decoration: none;
-}
-
-section {
-    padding: 2rem;
-}
-
-footer {
-    background-color: #eee;
-    text-align: center;
-    padding: 1rem;
+    font-size: 14px;
 }
