@@ -17,8 +17,12 @@ body {
 .menu {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     width: 10vw;
+    position: absolute;
+    right: 0; /* Ajouté pour le placer à droite */
+    top: 0;
 }
 
 .menu_content {
@@ -71,8 +75,64 @@ body {
 }
 
 .modal-content p {
+    display: none;
     margin: 0;
     font-size: 14px;
+}
+
+/* Présentation */
+
+.left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height: 100vh;
+    gap: 3rem;
+    padding-left: 2rem;
+}
+
+.left button {
+    height: 30px;
+    width: 100px;
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.left .presentation {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+.presentation span {
+    font-size: 100px;
+}
+
+.presentation #first_text {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.presentation #name_text {
+    display: flex;
+    gap: 10px;
+}
+
+.presentation #name {
+    color: red;
+}
+
+.presentation #paragraphe {
+    margin-top: 10px;
+}
+
+.presentation button {
+    width: 30%;
+    height: 100px;
+    border-radius: 10px;
 }
 
 /* Cercle */
