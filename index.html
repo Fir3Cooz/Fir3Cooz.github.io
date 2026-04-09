@@ -1,46 +1,484 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="menu">
-    <div class="menu_content">
-      <div class="icons">
-        <img src="assets/img/id-card.svg" alt="Identity">
-      </div>
-      <div class="icons">
-        <img src="assets/img/app-window.svg" alt="Skills">
-      </div>
-      <div class="icons">
-        <img src="assets/img/folder-git-2.svg" alt="Projects">
-      </div>
-    </div>
-  </div>
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <p id="Identity">Identity</p>
-      <p id="Skills">Skills</p>
-      <p id="Projects">Projects</p>
-    </div>
-  </div>
-  <div class="left">
-    <div class="presentation">
-      <p id="first_text">Hello,</p>
-      <span id="name_text">I am <p id="name">Lucas</p>,</span>
-      <span>web developper</span>
-      <p id="paragraphe">Viribus rexit urbes tamen nominibus urbes quam agrestibus amittunt primigenia quam amittunt quae ad enim.</p>
-    </div>
-    <button id="savoirplus">En savoir +</button>
-  </div>
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>匠 — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follow" id="cursorFollow"></div>
+    <canvas id="sakura-canvas"></canvas>
 
-  <!--<div class="circle" id="circle1"></div>-->
-  <!--<div class="circle" id="circle2"></div>-->
-  <footer class="footer">
-    © Lucas 2025
-  </footer>
-  <script src="script.js"></script>
-</body>
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="loader-bg-kanji">匠</div>
+      <div class="counter-wrap">
+        <div class="counter" id="loaderNum">0</div>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill" id="loaderBar"></div>
+      </div>
+      <div class="loader-label">LOADING PORTFOLIO</div>
+      <div class="loader-jp">一 期 一 会</div>
+    </div>
+
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="#" class="logo" data-page="0">匠<sub>TAKUMI — PORTFOLIO</sub></a>
+      <ul class="nav-links">
+        <li>
+          <a href="#" data-page="1"
+            ><span class="link-text">À propos</span
+            ><span class="link-text-hover">À propos</span></a
+          >
+        </li>
+        <li>
+          <a href="#" data-page="2"
+            ><span class="link-text">Projets</span
+            ><span class="link-text-hover">Projets</span></a
+          >
+        </li>
+        <li>
+          <a href="#" data-page="3"
+            ><span class="link-text">Compétences</span
+            ><span class="link-text-hover">Compétences</span></a
+          >
+        </li>
+        <li>
+          <a href="#" data-page="4"
+            ><span class="link-text">Formation</span
+            ><span class="link-text-hover">Formation</span></a
+          >
+        </li>
+        <li>
+          <a href="#" data-page="5"
+            ><span class="link-text">Contact</span
+            ><span class="link-text-hover">Contact</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <!-- PAGE INDICATOR -->
+    <div class="page-indicator" id="pageIndicator">
+      <div class="pi-num">
+        <span class="pi-current" id="piCurrent">01</span>
+        <span class="pi-sep">/</span>
+        <span class="pi-total">05</span>
+      </div>
+      <div class="pi-label" id="piLabel">À PROPOS</div>
+      <div class="pi-jp" id="piJp">自己紹介</div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="book-progress" id="bookProgress">
+      <span class="bp-label">SCROLL</span>
+      <div class="bp-track"><div class="bp-fill" id="bpFill"></div></div>
+      <span class="bp-label">→</span>
+    </div>
+
+    <!-- ════ BOOK (fixed, full screen) ════ -->
+    <section class="book" id="book">
+      <div class="book-stage" id="bookStage">
+        <!-- PAGE 0 — HERO -->
+        <div
+          class="book-page hero"
+          data-page="0"
+          data-label="ACCUEIL"
+          data-jp="表紙"
+        >
+          <div class="hero-bg-layer"></div>
+          <div class="hero-grain"></div>
+          <div class="hero-kanji k1">創</div>
+          <div class="hero-kanji k2">道</div>
+          <div class="hero-kanji k3">魂</div>
+          <div class="hero-content">
+            <div class="hero-label" id="heroLabel"></div>
+            <h1 class="hero-name" id="heroName"></h1>
+            <p class="hero-sub" id="heroSub"></p>
+          </div>
+          <div class="hero-scroll-indicator" id="heroScroll">
+            <span class="scroll-text">SCROLL</span>
+            <span class="scroll-dot"></span>
+          </div>
+        </div>
+
+        <!-- PAGE 1 — ABOUT -->
+        <div
+          class="book-page paper page-about"
+          data-page="1"
+          data-label="À PROPOS"
+          data-jp="自己紹介"
+        >
+          <div class="page-bg-kanji">美</div>
+          <div class="page-inner">
+            <div class="p-header">
+              <div class="p-number">01 — À PROPOS</div>
+              <h2 class="p-title">
+                <span class="line"
+                  ><span class="line-inner">L'art du</span></span
+                >
+                <span class="line"
+                  ><span class="line-inner"
+                    >détail <span class="kanji">美</span></span
+                  ></span
+                >
+              </h2>
+            </div>
+            <div class="page-about-grid">
+              <div class="about-img-wrap">
+                <div class="about-img"></div>
+                <div class="about-img-frame"></div>
+                <div class="about-img-tag">東京 · TOKYO · 2024</div>
+              </div>
+              <div class="about-body">
+                <p>
+                  <strong>Designer & Développeur Senior</strong> chez Apple, je
+                  conçois des expériences numériques qui fusionnent l'esthétique
+                  japonaise du <em>wabi-sabi</em> avec la précision de
+                  Cupertino.
+                </p>
+                <div class="about-quote">
+                  「一期一会」— Chaque rencontre est unique. Chaque projet est
+                  irremplaçable.
+                </div>
+                <p>
+                  Passionné par la convergence du design et de l'ingénierie, je
+                  crée des produits qui ne se contentent pas de fonctionner —
+                  ils <strong>émeuvent</strong>.
+                </p>
+                <div class="about-stats">
+                  <div class="stat">
+                    <div>
+                      <span class="stat-num"
+                        >8<span class="accent">+</span></span
+                      >
+                    </div>
+                    <div class="stat-lbl">Années d'exp.</div>
+                  </div>
+                  <div class="stat">
+                    <div>
+                      <span class="stat-num"
+                        >50<span class="accent">+</span></span
+                      >
+                    </div>
+                    <div class="stat-lbl">Projets livrés</div>
+                  </div>
+                  <div class="stat">
+                    <div><span class="stat-num">3</span></div>
+                    <div class="stat-lbl">Brevets Apple</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE 2 — PROJECTS -->
+        <div
+          class="book-page dark page-projects"
+          data-page="2"
+          data-label="PROJETS"
+          data-jp="作品集"
+        >
+          <div class="page-bg-kanji">作</div>
+          <div class="page-inner">
+            <div class="p-header">
+              <div class="p-number">02 — PROJETS</div>
+              <h2 class="p-title" style="color: var(--white)">
+                <span class="line"
+                  ><span class="line-inner"
+                    >Œuvres sélectionnées <span class="kanji">作品</span></span
+                  ></span
+                >
+              </h2>
+            </div>
+            <div class="projects-grid">
+              <div class="proj-card" data-kanji="果">
+                <div class="corner-mark cm-tl-h"></div>
+                <div class="corner-mark cm-tl-v"></div>
+                <div class="corner-mark cm-br-h"></div>
+                <div class="corner-mark cm-br-v"></div>
+                <div>
+                  <div class="proj-num">01</div>
+                  <div class="proj-tag">Design System · iOS</div>
+                  <div class="proj-name">Apple Design Language 2.0</div>
+                  <div class="proj-desc">
+                    Refonte du design system interne d'Apple. Unification
+                    cross-platform.
+                  </div>
+                </div>
+                <div class="proj-tech">
+                  <span>SwiftUI</span><span>Figma</span><span>Tokens</span>
+                </div>
+              </div>
+              <div class="proj-card" data-kanji="界">
+                <div class="corner-mark cm-tl-h"></div>
+                <div class="corner-mark cm-tl-v"></div>
+                <div class="corner-mark cm-br-h"></div>
+                <div class="corner-mark cm-br-v"></div>
+                <div>
+                  <div class="proj-num">02</div>
+                  <div class="proj-tag">Spatial · UX</div>
+                  <div class="proj-name">Vision Pro Gallery</div>
+                  <div class="proj-desc">
+                    Galerie d'art immersive en réalité mixte inspirée des musées
+                    japonais.
+                  </div>
+                </div>
+                <div class="proj-tech">
+                  <span>RealityKit</span><span>SwiftUI</span><span>3D</span>
+                </div>
+              </div>
+              <div class="proj-card" data-kanji="音">
+                <div class="corner-mark cm-tl-h"></div>
+                <div class="corner-mark cm-tl-v"></div>
+                <div class="corner-mark cm-br-h"></div>
+                <div class="corner-mark cm-br-v"></div>
+                <div>
+                  <div class="proj-num">03</div>
+                  <div class="proj-tag">Web App · Creative</div>
+                  <div class="proj-name">Koe — Sound Canvas</div>
+                  <div class="proj-desc">
+                    Création sonore générative. Les formes deviennent des
+                    paysages sonores.
+                  </div>
+                </div>
+                <div class="proj-tech">
+                  <span>React</span><span>Web Audio</span><span>GLSL</span>
+                </div>
+              </div>
+              <div class="proj-card" data-kanji="流">
+                <div class="corner-mark cm-tl-h"></div>
+                <div class="corner-mark cm-tl-v"></div>
+                <div class="corner-mark cm-br-h"></div>
+                <div class="corner-mark cm-br-v"></div>
+                <div>
+                  <div class="proj-num">04</div>
+                  <div class="proj-tag">Brand · Motion</div>
+                  <div class="proj-name">Nagare Brand System</div>
+                  <div class="proj-desc">
+                    Identité visuelle pour une fintech japonaise. Logo animé et
+                    motion guidelines.
+                  </div>
+                </div>
+                <div class="proj-tech">
+                  <span>After Effects</span><span>Lottie</span
+                  ><span>Figma</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE 3 — SKILLS -->
+        <div
+          class="book-page paper page-skills"
+          data-page="3"
+          data-label="COMPÉTENCES"
+          data-jp="技能"
+        >
+          <div class="page-bg-kanji">技</div>
+          <div class="page-inner">
+            <div class="p-header">
+              <div class="p-number">03 — COMPÉTENCES</div>
+              <h2 class="p-title">
+                <span class="line"
+                  ><span class="line-inner"
+                    >Savoir-faire <span class="kanji">技</span></span
+                  ></span
+                >
+              </h2>
+            </div>
+            <div class="skills-grid">
+              <div class="skill-card" data-kanji="画">
+                <div class="red-line"></div>
+                <h3>UI / UX Design</h3>
+                <p>
+                  Interfaces centrées utilisateur avec une attention
+                  obsessionnelle au détail.
+                </p>
+                <div class="skill-tags">
+                  <span>Figma</span><span>Sketch</span><span>System</span>
+                </div>
+              </div>
+              <div class="skill-card" data-kanji="码">
+                <div class="red-line"></div>
+                <h3>Frontend Dev</h3>
+                <p>
+                  Code production-ready avec standards Apple : performance et
+                  accessibilité.
+                </p>
+                <div class="skill-tags">
+                  <span>React</span><span>TypeScript</span><span>Next.js</span>
+                </div>
+              </div>
+              <div class="skill-card" data-kanji="動">
+                <div class="red-line"></div>
+                <h3>Motion Design</h3>
+                <p>
+                  Animations narratives et micro-interactions qui apportent vie
+                  aux interfaces.
+                </p>
+                <div class="skill-tags">
+                  <span>After Effects</span><span>GSAP</span><span>Lottie</span>
+                </div>
+              </div>
+              <div class="skill-card" data-kanji="空">
+                <div class="red-line"></div>
+                <h3>Spatial & 3D</h3>
+                <p>
+                  Design pour la réalité mixte et spatiale. Expériences
+                  visionOS.
+                </p>
+                <div class="skill-tags">
+                  <span>RealityKit</span><span>Three.js</span
+                  ><span>Blender</span>
+                </div>
+              </div>
+              <div class="skill-card" data-kanji="略">
+                <div class="red-line"></div>
+                <h3>Direction Créative</h3>
+                <p>
+                  Vision stratégique et direction artistique. Du concept au
+                  produit final.
+                </p>
+                <div class="skill-tags">
+                  <span>Brand</span><span>Art Direction</span
+                  ><span>UX Research</span>
+                </div>
+              </div>
+              <div class="skill-card" data-kanji="器">
+                <div class="red-line"></div>
+                <h3>Mobile Dev</h3>
+                <p>
+                  Applications natives iOS avec SwiftUI et expériences
+                  cross-platform.
+                </p>
+                <div class="skill-tags">
+                  <span>Swift</span><span>SwiftUI</span><span>Xcode</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE 4 — EDUCATION -->
+        <div
+          class="book-page dark page-education"
+          data-page="4"
+          data-label="FORMATION"
+          data-jp="経歴"
+        >
+          <div class="page-bg-kanji">学</div>
+          <div class="page-inner">
+            <div class="p-header">
+              <div class="p-number">04 — FORMATION</div>
+              <h2 class="p-title" style="color: var(--white)">
+                <span class="line"
+                  ><span class="line-inner"
+                    >Parcours <span class="kanji">学</span></span
+                  ></span
+                >
+              </h2>
+            </div>
+            <div class="edu-content">
+              <div class="timeline">
+                <div class="tl-item">
+                  <div class="tl-year">2020 — 2022</div>
+                  <div class="tl-degree">Master Design & Interaction</div>
+                  <div class="tl-school">ENSAD — Paris</div>
+                  <div class="tl-desc">
+                    Spécialisation design d'interaction et expériences
+                    immersives. Mémoire sur l'esthétique japonaise.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-year">2017 — 2020</div>
+                  <div class="tl-degree">Licence Informatique & Multimédia</div>
+                  <div class="tl-school">Université Paris-Saclay</div>
+                  <div class="tl-desc">
+                    Développement web, algorithmique et design graphique. Projet
+                    primé au concours national.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-year">2019</div>
+                  <div class="tl-degree">Échange — Design Thinking</div>
+                  <div class="tl-school">
+                    Musashino Art University, Tokyo 武蔵野美術大学
+                  </div>
+                  <div class="tl-desc">
+                    Étude approfondie du design japonais, calligraphie et
+                    philosophie du monozukuri.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-year">2022</div>
+                  <div class="tl-degree">Certification Apple — HIG</div>
+                  <div class="tl-school">Apple Developer Academy</div>
+                  <div class="tl-desc">
+                    Principes de design Apple, guidelines d'interface et
+                    prototypage SwiftUI.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE 5 — CONTACT -->
+        <div
+          class="book-page paper page-contact"
+          data-page="5"
+          data-label="CONTACT"
+          data-jp="連絡先"
+        >
+          <div class="page-bg-kanji">縁</div>
+          <div class="page-inner">
+            <div class="contact-inner-block">
+              <div class="p-number">05 — CONTACT</div>
+              <h2 class="contact-heading">
+                <span class="line"
+                  ><span class="line-inner">Créons ensemble</span></span
+                >
+                <span class="line"
+                  ><span class="line-inner">quelque chose</span></span
+                >
+                <span class="line"
+                  ><span class="line-inner"
+                    >de <span class="red">beau</span></span
+                  ></span
+                >
+              </h2>
+              <p class="contact-sub">
+                Chaque grand projet commence par une conversation. —
+                「ご連絡ください」
+              </p>
+              <a
+                href="mailto:votre@email.com"
+                class="magnetic-btn"
+                data-magnetic
+                >votre@email.com</a
+              >
+              <div class="contact-socials">
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Dribbble</a>
+                <a href="#">Twitter</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
 </html>
