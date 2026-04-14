@@ -176,7 +176,7 @@ class BookEngine {
     // Virtual progress (0 to numPages-1). No actual page scrolling involved.
     this.progress = 0;
     this.target = 0;
-    this.ease = 0.08;
+    this.ease = 0.025;
     this.sensitivity = 0.0022;
     this.lastActiveIndex = -1;
     this.snapTimer = null;
@@ -276,7 +276,7 @@ class BookEngine {
     this.snapTimer = setTimeout(() => {
       this.target = Math.round(this.target);
       this.clamp();
-    }, 180);
+    }, 300);
   }
 
   tick() {
